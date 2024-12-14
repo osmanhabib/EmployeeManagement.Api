@@ -2,5 +2,4 @@
 
 public class GetEmployeeQuery
 {
-    public string EmployeeId { get; set; } = string.Empty;
 }

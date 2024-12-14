@@ -11,7 +11,6 @@ namespace EmployeeManagement.Controllers
     public class DepartmentController(GetDepartmentsQueryHandler getDepartmentsQueryHandler) : ControllerBase
     {
         [HttpGet("getlist")]
-        [Authorize]
         public IActionResult GetDepartments([FromQuery]GetDepartmentsQuery query) 
         {
           var result = getDepartmentsQueryHandler.HandleAsync(query).Result;

@@ -17,18 +17,9 @@ namespace EmployeeManagement.Features.Employees.Handlers
             var claims = httpContextAccessor.HttpContext?.User.Claims.ToList() ?? throw new DataException("Logged in user is not valid.");
 
             var loggedInUserId = claims.FirstOrDefault(c => c.Type == "UserId")?.Value ?? string.Empty;
-            var loggedInUserRole = claims.FirstOrDefault(c => c.Type == "Role")?.Value ?? string.Empty;
+            var loggedInUserEmail = claims.FirstOrDefault(c => c.Type == "Email")?.Value ?? string.Empty;
 
-            if (!loggedInUserRole.ToLower().Equals("admin")
-                && !loggedInUserId.Equals(query.EmployeeId))
-            {
-                throw new DataException("User is not allowed to get employee details");
-            }
-
-            var validationResult = await validator.ValidateAsync(query);
-            validationResult.EnsureValidResult();
-
-            var existingEmployee = await context.Employees.FirstOrDefaultAsync(u => u.Id == query.EmployeeId);
+            var existingEmployee = await context.Employees.FirstOrDefaultAsync(u => u.Email.Equals(loggedInUserEmail));
 
             if (existingEmployee is null)
             {
@@ -50,6 +41,7 @@ namespace EmployeeManagement.Features.Employees.Handlers
                     EmployeeId = existingEmployee.Id,
                     FirstName = existingEmployee.FirstName,
                     LastName = existingEmployee.LastName,
+                    Email = existingEmployee.Email,
                     DepartmentId = department.Id ?? string.Empty,
                     DepartmentName = department.DepartmentName,
                     DesignationId = designation.Id,

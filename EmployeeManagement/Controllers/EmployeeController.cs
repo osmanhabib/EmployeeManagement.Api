@@ -16,6 +16,7 @@ namespace EmployeeManagement.Controllers
         DeleteEmployeeCommandHandler deleteEmployeeCommandHandler) : ControllerBase
     {
         [HttpPost("create")]
+        [AllowAnonymous]
         public IActionResult CreateEmployee([FromBody]CreateEmployeeCommand command) 
         {
           var result = createEmployeeHandler.HandleAsync(command).Result;

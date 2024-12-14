@@ -17,18 +17,12 @@ public class DeleteEmployeeCommandHandler(IValidator<DeleteEmployeeCommand> vali
         var claims = httpContextAccessor.HttpContext?.User.Claims.ToList() ?? throw new DataException("Logged in user is not valid.");
 
         var loggedInUserId = claims.FirstOrDefault(c => c.Type == "UserId")?.Value ?? string.Empty;
-        var loggedInUserRole = claims.FirstOrDefault(c => c.Type == "Role")?.Value ?? string.Empty;
-
-        if (!loggedInUserRole.ToLower().Equals("admin")
-            && !loggedInUserId.Equals(command.EmployeeId))
-        {
-            throw new DataException("User is not allowed to delete employee");
-        }
+        var loggedInUserEmail = claims.FirstOrDefault(c => c.Type == "Email")?.Value ?? string.Empty;
 
         var validationResult = await validator.ValidateAsync(command);
         validationResult.EnsureValidResult();
 
-        var existingEmployee = await context.Employees.FirstOrDefaultAsync(u => u.Id == command.EmployeeId);
+        var existingEmployee = await context.Employees.FirstOrDefaultAsync(u => u.Email.Equals(loggedInUserEmail));
 
         if (existingEmployee is null)
         {

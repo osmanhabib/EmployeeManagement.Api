@@ -24,7 +24,7 @@ namespace EmployeeManagement.Controllers
             }
 
             var res = new ApiResponse() { status = false,
-                   message = "failed" };
+                   message = "Invalid login attempt." };
 
             return Ok(res);
 

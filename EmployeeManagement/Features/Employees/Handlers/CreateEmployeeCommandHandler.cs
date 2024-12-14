@@ -11,21 +11,10 @@ using System.Data;
 namespace EmployeeManagement.Features.Employees.Handlers;
 
 public class CreateEmployeeCommandHandler(IValidator<CreateEmployeeCommand> validator,
-    EmployeeManagementDbContext context,
-    IHttpContextAccessor httpContextAccessor)
+    EmployeeManagementDbContext context)
 {
     public async Task<ApiResponse> HandleAsync(CreateEmployeeCommand command)
     {
-        var claims = httpContextAccessor.HttpContext?.User.Claims.ToList() ?? throw new DataException("Logged in user is not valid.");
-       
-        var loggedInUserId = claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
-        var loggedInUserRole = claims.FirstOrDefault(c => c.Type == "Role")?.Value;
-
-        if(loggedInUserId  == null || loggedInUserRole == null)
-        {
-            throw new DataException("User is not valid to create a new employee");
-        }
-
         var validationResult = await validator.ValidateAsync(command);
         validationResult.EnsureValidResult();
 
@@ -41,7 +30,7 @@ public class CreateEmployeeCommandHandler(IValidator<CreateEmployeeCommand> vali
 
         if (isValidDepartment == null)
         {
-            return new ApiResponse() { message = "Invalid Department Id", status = false };
+            throw new DataException("Invalid Department Id");
         }
 
         var isValidDesignation = await context.Designations
@@ -49,14 +38,14 @@ public class CreateEmployeeCommandHandler(IValidator<CreateEmployeeCommand> vali
 
         if (isValidDesignation == null)
         {
-            return new ApiResponse() { message = "Invalid Designation Id", status = false };
+            throw new DataException("Invalid Designation Id");
         }
 
         var user = new User()
         {
             UserName = command.Email,
             Password = Utility.StringToBase64(command.Password),
-            CreatedBy = command.CreatedBy,
+            CreatedBy = "system",
             Role = "user"
         };
 
@@ -70,9 +59,9 @@ public class CreateEmployeeCommandHandler(IValidator<CreateEmployeeCommand> vali
 
         var employee = new Employee()
         {
-            FirstName = command.Email,
+            FirstName = command.FirstName,
             LastName = command.LastName,
-            CreatedBy = command.CreatedBy,
+            CreatedBy = "system",
             DepartmentId = command.DepartmentId,
             DesignationId = command.DesignationId,
             Email = command.Email
@@ -81,7 +70,7 @@ public class CreateEmployeeCommandHandler(IValidator<CreateEmployeeCommand> vali
         await context.Employees.AddAsync(employee);
         await context.SaveChangesAsync();
 
-        return new ApiResponse() { message = "Successfully created.", status = true };
+        return new ApiResponse() { message = "Employee successfully created.", status = true };
     }
 
 }

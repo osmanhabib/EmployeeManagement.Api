@@ -11,7 +11,6 @@ namespace EmployeeManagement.Controllers
     public class DesignationController(GetDesignationsQueryHandler getDesignationsQueryHandler) : ControllerBase
     {
         [HttpGet("getlist")]
-        [Authorize]
         public IActionResult GetDesignations([FromQuery]GetDesignationsQuery query) 
         {
           var result = getDesignationsQueryHandler.HandleAsync(query).Result;

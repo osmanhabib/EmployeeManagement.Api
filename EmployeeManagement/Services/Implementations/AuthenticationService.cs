@@ -15,7 +15,7 @@ namespace EmployeeManagement.Services.Implementations
 
             var validUserLogin = user !=null && Utility.Base64ToString(user.Password).Equals(password);
 
-            if (user == null && !validUserLogin) 
+            if (user == null || !validUserLogin) 
             {
                 throw new DataException("Invalid login attempt");
             }

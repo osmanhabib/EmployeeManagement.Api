@@ -20,7 +20,7 @@ public class JwtTokenGenerator(IOptions<JwtSettings> jwtSettings) : IJwtTokenGen
         var claims = new[]
         {
             new Claim("UserId",user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
+            new Claim("Email", user.UserName),
             new Claim("Role", user.Role),
         };
 

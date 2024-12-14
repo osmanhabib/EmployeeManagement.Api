@@ -8,6 +8,4 @@ public class CreateEmployeeCommand
     public string Password { get; set; } = string.Empty;
     public string DepartmentId { get; set; } = string.Empty;
     public string DesignationId { get; set; } = string.Empty;
-    public string CreatedBy { get; set; } = string.Empty;
-    public string LoggedInUserRole { get; set; } = string.Empty;
 }
