@@ -5,6 +5,8 @@ using EmployeeManagement.Services;
 using EmployeeManagement.Services.Implementations;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
@@ -18,8 +20,8 @@ public static class DependencyInjection
     {
         services.Configure<JwtSettings>(configurationManager.GetSection(JwtSettings.SectionName));
 
-        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-        services.AddSingleton<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -63,6 +65,20 @@ public static class DependencyInjection
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateEmployeeCommandValidator>());
 
         services.AddScoped<CreateEmployeeCommandHandler>();
+
+        services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+
+            options.AssumeDefaultVersionWhenUnspecified = true;
+
+            options.ReportApiVersions = true;
+
+            options.ApiVersionReader = ApiVersionReader.Combine(
+                new UrlSegmentApiVersionReader(),  // Version in URL (e.g., /api/v1/controller)
+                new HeaderApiVersionReader("x-api-version")  // Version in custom header (e.g., x-api-version: 1)
+            );
+        });
 
         return services;
     }

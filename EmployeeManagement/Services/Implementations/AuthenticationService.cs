@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.Data;
 using EmployeeManagement.Dtos;
+using System.Data;
 
 namespace EmployeeManagement.Services.Implementations
 {
@@ -8,12 +9,16 @@ namespace EmployeeManagement.Services.Implementations
     {
         public AuthenticationResult Login(string email, string password)
         {
-            var user =  context.Users.SingleOrDefault(u=> u.UserName == email && u.Password == password);
+            var user =  context.Users.SingleOrDefault(u=> u.UserName.Equals(email) && u.Password.Equals(password)) 
+                   ?? throw new InvalidDataException("Invalid User");
+
             if (user == null) 
             {
-                var token = jwtTokenGenerator.GenerateToken(user);
+                throw new DataException("Invalid User");
             }
-            throw new Exception("Invalid User");
+            var token = jwtTokenGenerator.GenerateToken(user);
+            
+            return new AuthenticationResult(token);
         }
     }
 }

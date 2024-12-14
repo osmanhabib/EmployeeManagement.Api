@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.Data;
 using EmployeeManagement.Domain.Entities;
+using EmployeeManagement.Dtos;
 using EmployeeManagement.Extensions;
 using EmployeeManagement.Features.Employees.Commands;
 using FluentValidation;
@@ -11,12 +12,7 @@ namespace EmployeeManagement.Features.Employees.Handlers;
 public class CreateEmployeeCommandHandler(IValidator<CreateEmployeeCommand> validator,
     EmployeeManagementDbContext context)
 {
-    private Employee Handle(CreateEmployeeCommand command)
-    {
-        return HandleAsync(command).Result;
-    }
-
-    public async Task<Employee> HandleAsync(CreateEmployeeCommand command)
+    public async Task<ApiResponse> HandleAsync(CreateEmployeeCommand command)
     {
         var validationResult = await validator.ValidateAsync(command);
         validationResult.EnsureValidResult();
@@ -26,7 +22,8 @@ public class CreateEmployeeCommandHandler(IValidator<CreateEmployeeCommand> vali
         if (existingUser is not null)
         {
             throw new DataException("User is already exists");
-        };
+        }
+
         var user = new User()
         {
             UserName = command.Email,
@@ -40,11 +37,21 @@ public class CreateEmployeeCommandHandler(IValidator<CreateEmployeeCommand> vali
 
         if(user is not null && user.UserId > 0)
         {
+            var employee = new Employee()
+            {
+                FirstName = command.Email,
+                LastName = command.LastName,
+                CreatedBy = command.CreatedBy,
+                DepartmentId = command.DepartmentId,
+                DesignationId = command.DesignationId,
+                Email = command.Email
+            };
 
-        };
+            await context.Employees.AddAsync(employee);
+            await context.SaveChangesAsync();
+        }
 
-
-        return new Employee();
+        return new ApiResponse() { message = "successfully created.", status = "success" };
     }
 
 }

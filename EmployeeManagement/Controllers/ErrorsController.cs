@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace EmployeeManagement.Controllers;
+
+[ApiController]
 public class ErrorsController : ControllerBase
 {
     [Route("/error")]
