@@ -28,13 +28,4 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Department\Handlers\" />
-    <Folder Include="Features\Department\Queries\" />
-    <Folder Include="Features\Designation\Handlers\" />
-    <Folder Include="Features\Designation\Queries\" />
-    <Folder Include="Features\Employees\Queries\" />
-    <Folder Include="Middleware\" />
-  </ItemGroup>
-
 </Project>

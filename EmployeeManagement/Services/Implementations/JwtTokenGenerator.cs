@@ -1,12 +1,12 @@
 ﻿using EmployeeManagement.Domain.Entities;
-using EmployeeManagement.Services;
+using EmployeeManagement.Utilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace EmployeeManagement.Authentication;
+namespace EmployeeManagement.Services.Implementations;
 
 public class JwtTokenGenerator(IOptions<JwtSettings> jwtSettings) : IJwtTokenGenerator
 {
@@ -19,9 +19,9 @@ public class JwtTokenGenerator(IOptions<JwtSettings> jwtSettings) : IJwtTokenGen
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub,user.Id.ToString()),
+            new Claim("UserId",user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new Claim("Role", user.Role),
         };
 
         var securityToken = new JwtSecurityToken(

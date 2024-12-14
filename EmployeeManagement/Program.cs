@@ -1,5 +1,3 @@
-using EmployeeManagement.Data;
-using Microsoft.EntityFrameworkCore;
 using EmployeeManagement.DependencyInjection;
 using Serilog;
 
@@ -14,9 +12,6 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeManagementDBConnectionString")));
 
 builder.Services.AddDependency(builder.Configuration);
 

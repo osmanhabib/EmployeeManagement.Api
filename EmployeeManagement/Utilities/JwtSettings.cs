@@ -1,4 +1,4 @@
-﻿namespace EmployeeManagement.Authentication;
+﻿namespace EmployeeManagement.Utilities;
 public class JwtSettings
 {
     public const string SectionName = "JwtSettings";

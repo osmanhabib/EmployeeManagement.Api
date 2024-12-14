@@ -16,10 +16,6 @@ namespace EmployeeManagement.Controllers
         [Authorize]
         public IActionResult CreateEmployee(CreateEmployeeCommand employeeCommand) 
         {
-          var createdBy = User.Claims.ToList()[2].Value;
-
-          employeeCommand.CreatedBy = createdBy ?? throw new DataException("Invalid Creator.");
-
           var result = createEmployeeHandler.HandleAsync(employeeCommand).Result;
 
           return Ok(result);

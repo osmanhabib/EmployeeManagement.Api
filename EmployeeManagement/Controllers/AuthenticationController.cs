@@ -15,9 +15,19 @@ namespace EmployeeManagement.Controllers
             var authresult = authenticationService.Login(loginRequest.Email,
                 loginRequest.Password);
 
-            var response = new AuthenticationResponse(authresult.Token);
+            if(authresult != null)
+            {
+                var response = new AuthenticationResponse(status: true,
+                    message: "success",
+                    Token: authresult.Token);
+                return Ok(response);
+            }
 
-            return Ok(response);
+            var res = new ApiResponse() { status = false,
+                   message = "failed" };
+
+            return Ok(res);
+
         }
     }
 }

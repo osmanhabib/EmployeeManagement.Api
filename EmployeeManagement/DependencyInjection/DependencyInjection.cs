@@ -1,5 +1,4 @@
-﻿using EmployeeManagement.Authentication;
-using EmployeeManagement.Features.Employees.Handlers;
+﻿using EmployeeManagement.Features.Employees.Handlers;
 using EmployeeManagement.Features.Employees.Validators;
 using EmployeeManagement.Services;
 using EmployeeManagement.Services.Implementations;
@@ -8,8 +7,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.Text;
+using EmployeeManagement.Data;
+using Microsoft.EntityFrameworkCore;
+using EmployeeManagement.Utilities;
+using EmployeeManagement.Features.Department.Handlers;
+using EmployeeManagement.Features.Designation.Handlers;
 
 namespace EmployeeManagement.DependencyInjection;
 
@@ -22,6 +25,9 @@ public static class DependencyInjection
 
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+        services.AddDbContext<EmployeeManagementDbContext>(options =>
+            options.UseSqlServer(configurationManager.GetConnectionString("EmployeeManagementDBConnectionString")));
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -37,23 +43,20 @@ public static class DependencyInjection
                     ValidAudience = "EmployeeManagement", // Valid audience
                 };
 
-                // Optional: You can handle the token validation events to add custom logic
                 options.Events = new JwtBearerEvents
                 {
                     OnTokenValidated = context =>
                     {
-                        // Add custom logic after token is validated (e.g., logging, user info retrieval)
-                        var claimsIdentity = (ClaimsIdentity)context.Principal?.Identity;
-                        var userId = claimsIdentity?.FindFirst("userId")?.Value;
+                        //var claimsIdentity = (ClaimsIdentity)context.Principal?.Identity;
+                        //var userId = claimsIdentity?.FindFirst("userId")?.Value;
 
                         return Task.CompletedTask;
                     },
                     OnAuthenticationFailed = context =>
                     {
-                        // Handle authentication failures (e.g., log errors)
                         if (context.Exception is SecurityTokenExpiredException)
                         {
-                            context.Response.Headers.Add("Token-Expired", "true");
+                            context.Response.Headers.Append("Token-Expired", "true");
                         }
 
                         return Task.CompletedTask;
@@ -65,6 +68,8 @@ public static class DependencyInjection
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateEmployeeCommandValidator>());
 
         services.AddScoped<CreateEmployeeCommandHandler>();
+        services.AddScoped<GetDepartmentsQueryHandler>();
+        services.AddScoped<GetDesignationsQueryHandler>();
 
         services.AddApiVersioning(options =>
         {
@@ -79,6 +84,8 @@ public static class DependencyInjection
                 new HeaderApiVersionReader("x-api-version")  // Version in custom header (e.g., x-api-version: 1)
             );
         });
+
+        services.AddHttpContextAccessor();
 
         return services;
     }
