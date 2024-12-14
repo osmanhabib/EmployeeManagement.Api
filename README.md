@@ -51,5 +51,8 @@ This project involves the creation of a system to track employee information, in
    - Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/employee-management-system.git
-   cd employee-management-system
+   git clone https://github.com/osmanhabib/EmployeeManagement.Api.git
+   cd EmployeeManagement.Api
+
+## Postman Collection
+
