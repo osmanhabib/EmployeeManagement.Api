@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using EmployeeManagement.Utilities;
 using EmployeeManagement.Features.Department.Handlers;
 using EmployeeManagement.Features.Designation.Handlers;
+using FluentValidation;
 
 namespace EmployeeManagement.DependencyInjection;
 
@@ -34,11 +35,12 @@ public static class DependencyInjection
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true, // Validate the issuer
-                    ValidateAudience = false, // Validate the audience
-                    ValidateLifetime = true, // Validate the expiration of the token
-                    ValidateIssuerSigningKey = true, // Validate the signing key
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("F9E9006E-1977-4575-B8A6-7ED4C0A7D36A")), // Secret key to validate the signature
+                    ValidateIssuer = true,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes("F9E9006E-1977-4575-B8A6-7ED4C0A7D36A")),
                     ValidIssuer = "EmployeeManagement", // Valid issuer
                     ValidAudience = "EmployeeManagement", // Valid audience
                 };
@@ -47,9 +49,6 @@ public static class DependencyInjection
                 {
                     OnTokenValidated = context =>
                     {
-                        //var claimsIdentity = (ClaimsIdentity)context.Principal?.Identity;
-                        //var userId = claimsIdentity?.FindFirst("userId")?.Value;
-
                         return Task.CompletedTask;
                     },
                     OnAuthenticationFailed = context =>
@@ -64,10 +63,14 @@ public static class DependencyInjection
                 };
             });
 
-        services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateEmployeeCommandValidator>());
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining<CreateEmployeeCommandValidator>();
 
         services.AddScoped<CreateEmployeeCommandHandler>();
+        services.AddScoped<GetEmployeeQueryHandler>();
+        services.AddScoped<UpdateEmployeeCommandHandler>();
+        services.AddScoped<DeleteEmployeeCommandHandler>();
+
         services.AddScoped<GetDepartmentsQueryHandler>();
         services.AddScoped<GetDesignationsQueryHandler>();
 

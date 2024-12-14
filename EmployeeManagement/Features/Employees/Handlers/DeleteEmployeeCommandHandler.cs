@@ -38,6 +38,12 @@ public class DeleteEmployeeCommandHandler(IValidator<DeleteEmployeeCommand> vali
         context.Employees.Remove(existingEmployee);
         await context.SaveChangesAsync();
 
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Id.Equals(loggedInUserId))
+            ?? throw new DataException("User not found");
+
+        context.Users.Remove(user);
+        await context.SaveChangesAsync();
+
         return new ApiResponse() { message = "Employee deleted sucessfully", status = true };
     }
 }
