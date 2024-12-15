@@ -62,7 +62,7 @@ This project involves the creation of a system to track employee information, in
 {
 	"info": {
 		"_postman_id": "2ca86a4b-eb35-47cd-bc87-efe020bef8fb",
-		"name": "SELISE-Assesment",
+		"name": "Employee Management",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "39475976"
 	},
@@ -85,13 +85,14 @@ This project involves the creation of a system to track employee information, in
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5107/employee/create",
+					"raw": "http://localhost:5107/v1/employee/create",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"employee",
 						"create"
 					]
@@ -114,13 +115,14 @@ This project involves the creation of a system to track employee information, in
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5107/auth/login",
+					"raw": "http://localhost:5107/v1/auth/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"auth",
 						"login"
 					]
@@ -144,13 +146,14 @@ This project involves the creation of a system to track employee information, in
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5107/department/getlist",
+					"raw": "http://localhost:5107/v1/department/getlist",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"department",
 						"getlist"
 					]
@@ -174,13 +177,14 @@ This project involves the creation of a system to track employee information, in
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5107/designation/getlist",
+					"raw": "http://localhost:5107/v1/designation/getlist",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"designation",
 						"getlist"
 					]
@@ -213,13 +217,14 @@ This project involves the creation of a system to track employee information, in
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5107/employee/delete",
+					"raw": "http://localhost:5107/v1/employee/delete",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"employee",
 						"delete"
 					]
@@ -252,15 +257,54 @@ This project involves the creation of a system to track employee information, in
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5107/employee/update",
+					"raw": "http://localhost:5107/v1/employee/update",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"employee",
 						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetEmployee",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI0YjczOTVmMy1iODM3LTQ1OTgtOTEyMi1lNWVlNGY5MTgxZDciLCJFbWFpbCI6Im9zbWFuQGdtYWlsLmNvbSIsIlJvbGUiOiJ1c2VyIiwiZXhwIjoxNzM0MjE5MjU0LCJpc3MiOiJFbXBsb3llZU1hbmFnZW1lbnQiLCJhdWQiOiJFbXBsb3llZU1hbmFnZW1lbnQifQ.9WAyvb-V_uWtpsisPrfDvYURnsSjcvv5CgxnQ4LnluM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5107/v1/employee/get",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5107",
+					"path": [
+						"v1",
+						"employee",
+						"get"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
 					]
 				}
 			},
