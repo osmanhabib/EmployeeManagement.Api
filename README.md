@@ -15,6 +15,7 @@ This project involves the creation of a system to track employee information, in
 - **Architectural Pattern**: Vertical Slicing with CQRS
 - **Logging**: Centralized logging system to capture errors and track the performance of the system
 - **API Versioning**: To manage multiple versions of the API
+- **Fluent Validation**: To validate the request model of the API
 - **Containerization**: Docker (optional) for creating isolated and reproducible environments
 
 ## Features
