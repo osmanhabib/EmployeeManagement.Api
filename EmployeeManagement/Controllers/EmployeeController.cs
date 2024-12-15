@@ -1,4 +1,5 @@
-﻿using EmployeeManagement.Features.Employees.Commands;
+﻿using Asp.Versioning;
+using EmployeeManagement.Features.Employees.Commands;
 using EmployeeManagement.Features.Employees.Handlers;
 using EmployeeManagement.Features.Employees.Queries;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmployeeManagement.Controllers
 {
     [ApiController]
-    [Route("employee")]
+    [Route("v{version:apiVersion}/employee")]
     [ApiVersion("1.0")]
     [Authorize]
     public class EmployeeController(CreateEmployeeCommandHandler createEmployeeHandler,

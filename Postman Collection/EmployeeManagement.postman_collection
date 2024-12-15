@@ -24,13 +24,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5107/employee/create",
+					"raw": "http://localhost:5107/v1/employee/create",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"employee",
 						"create"
 					]
@@ -53,13 +54,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5107/auth/login",
+					"raw": "http://localhost:5107/v1/auth/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"auth",
 						"login"
 					]
@@ -83,13 +85,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5107/department/getlist",
+					"raw": "http://localhost:5107/v1/department/getlist",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"department",
 						"getlist"
 					]
@@ -113,13 +116,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5107/designation/getlist",
+					"raw": "http://localhost:5107/v1/designation/getlist",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"designation",
 						"getlist"
 					]
@@ -152,13 +156,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5107/employee/delete",
+					"raw": "http://localhost:5107/v1/employee/delete",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"employee",
 						"delete"
 					]
@@ -191,15 +196,54 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5107/employee/update",
+					"raw": "http://localhost:5107/v1/employee/update",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5107",
 					"path": [
+						"v1",
 						"employee",
 						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetEmployee",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI0YjczOTVmMy1iODM3LTQ1OTgtOTEyMi1lNWVlNGY5MTgxZDciLCJFbWFpbCI6Im9zbWFuQGdtYWlsLmNvbSIsIlJvbGUiOiJ1c2VyIiwiZXhwIjoxNzM0MjE5MjU0LCJpc3MiOiJFbXBsb3llZU1hbmFnZW1lbnQiLCJhdWQiOiJFbXBsb3llZU1hbmFnZW1lbnQifQ.9WAyvb-V_uWtpsisPrfDvYURnsSjcvv5CgxnQ4LnluM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5107/v1/employee/get",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5107",
+					"path": [
+						"v1",
+						"employee",
+						"get"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
 					]
 				}
 			},

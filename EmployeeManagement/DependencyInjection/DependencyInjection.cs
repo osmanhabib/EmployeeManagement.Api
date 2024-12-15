@@ -4,8 +4,6 @@ using EmployeeManagement.Services;
 using EmployeeManagement.Services.Implementations;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using EmployeeManagement.Data;
@@ -14,6 +12,7 @@ using EmployeeManagement.Utilities;
 using EmployeeManagement.Features.Department.Handlers;
 using EmployeeManagement.Features.Designation.Handlers;
 using FluentValidation;
+using Asp.Versioning;
 
 namespace EmployeeManagement.DependencyInjection;
 
@@ -29,6 +28,8 @@ public static class DependencyInjection
 
         services.AddDbContext<EmployeeManagementDbContext>(options =>
             options.UseSqlServer(configurationManager.GetConnectionString("EmployeeManagementDBConnectionString")));
+
+        #region JWT
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -63,6 +64,8 @@ public static class DependencyInjection
                 };
             });
 
+        #endregion
+
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<CreateEmployeeCommandValidator>();
 
@@ -77,11 +80,8 @@ public static class DependencyInjection
         services.AddApiVersioning(options =>
         {
             options.DefaultApiVersion = new ApiVersion(1, 0);
-
             options.AssumeDefaultVersionWhenUnspecified = true;
-
             options.ReportApiVersions = true;
-
             options.ApiVersionReader = ApiVersionReader.Combine(
                 new UrlSegmentApiVersionReader(),  // Version in URL (e.g., /api/v1/controller)
                 new HeaderApiVersionReader("x-api-version")  // Version in custom header (e.g., x-api-version: 1)

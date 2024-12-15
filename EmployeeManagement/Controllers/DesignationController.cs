@@ -1,12 +1,12 @@
-﻿using EmployeeManagement.Features.Designation.Handlers;
+﻿using Asp.Versioning;
+using EmployeeManagement.Features.Designation.Handlers;
 using EmployeeManagement.Features.Designation.Queries;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Controllers
 {
     [ApiController]
-    [Route("designation")]
+    [Route("v{version:apiVersion}/designation")]
     [ApiVersion("1.0")]
     public class DesignationController(GetDesignationsQueryHandler getDesignationsQueryHandler) : ControllerBase
     {

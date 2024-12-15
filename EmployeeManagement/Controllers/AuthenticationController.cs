@@ -1,12 +1,13 @@
-﻿using EmployeeManagement.Dtos;
+﻿using Asp.Versioning;
+using EmployeeManagement.Dtos;
 using EmployeeManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Controllers
 {
-
     [ApiController]
-    [Route("auth")]
+    [Route("v{version:apiVersion}/auth")]
+    [ApiVersion("1.0")]
     public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
     {
         [HttpPost("login")]
