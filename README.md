@@ -45,11 +45,229 @@ This project involves the creation of a system to track employee information, in
 ### 7. **Containerization (Docker)**
    - **Docker** for creating isolated environments and making deployment reproducible and scalable
 
+
 ## Installation
 
 ### 1. **Clone the repository**
    - Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/employee-management-system.git
-   cd employee-management-system
+   git clone https://github.com/osmanhabib/EmployeeManagement.Api.git
+   cd EmployeeManagement.Api
+  ```
+
+## Postman Collection
+```
+
+{
+	"info": {
+		"_postman_id": "2ca86a4b-eb35-47cd-bc87-efe020bef8fb",
+		"name": "SELISE-Assesment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39475976"
+	},
+	"item": [
+		{
+			"name": "CreateEmployee",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"FirstName\":\"Md.Osman\",\r\n    \"lastname\":\"Habib\",\r\n    \"email\":\"osman@gmail.com\",\r\n    \"password\": \"Asdf@12345\",\r\n    \"DepartmentId\":\"217fff7a-d1cc-4405-a501-8ff90e7755\",\r\n    \"DesignationId\":\"117fff7a-d1cc-4405-a501-8ff90e1021\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5107/employee/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5107",
+					"path": [
+						"employee",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"osman@gmail.com\",\r\n    \"password\" : \"Asdf@12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5107/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5107",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDepartments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxIiwiZ2l2ZW5fbmFtZSI6Im9zbWFuQGdtYWlsLmNvbSIsIlJvbGUiOiJBZG1pbiIsImV4cCI6MTczNDIxMjc2NiwiaXNzIjoiRW1wbG95ZWVNYW5hZ2VtZW50IiwiYXVkIjoiRW1wbG95ZWVNYW5hZ2VtZW50In0.BW_QRkVaxz3GAIuzP_puT5FD1KNGTbBjfzi7TmPU5ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5107/department/getlist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5107",
+					"path": [
+						"department",
+						"getlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDesignations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxIiwiZ2l2ZW5fbmFtZSI6Im9zbWFuQGdtYWlsLmNvbSIsIlJvbGUiOiJBZG1pbiIsImV4cCI6MTczNDIxMjc2NiwiaXNzIjoiRW1wbG95ZWVNYW5hZ2VtZW50IiwiYXVkIjoiRW1wbG95ZWVNYW5hZ2VtZW50In0.BW_QRkVaxz3GAIuzP_puT5FD1KNGTbBjfzi7TmPU5ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5107/designation/getlist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5107",
+					"path": [
+						"designation",
+						"getlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteEmployee",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI0YjczOTVmMy1iODM3LTQ1OTgtOTEyMi1lNWVlNGY5MTgxZDciLCJFbWFpbCI6Im9zbWFuQGdtYWlsLmNvbSIsIlJvbGUiOiJ1c2VyIiwiZXhwIjoxNzM0MjE5NTU0LCJpc3MiOiJFbXBsb3llZU1hbmFnZW1lbnQiLCJhdWQiOiJFbXBsb3llZU1hbmFnZW1lbnQifQ.K_gdMesC5sRAao9aAX9FlBv20d3F4sKcH473OWCm39s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"EmployeeId\" : \"10d9eea4-9aea-4113-81ff-9627497fc14c\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5107/employee/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5107",
+					"path": [
+						"employee",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateEmployee",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI0YjczOTVmMy1iODM3LTQ1OTgtOTEyMi1lNWVlNGY5MTgxZDciLCJFbWFpbCI6Im9zbWFuQGdtYWlsLmNvbSIsIlJvbGUiOiJ1c2VyIiwiZXhwIjoxNzM0MjE5MjU0LCJpc3MiOiJFbXBsb3llZU1hbmFnZW1lbnQiLCJhdWQiOiJFbXBsb3llZU1hbmFnZW1lbnQifQ.9WAyvb-V_uWtpsisPrfDvYURnsSjcvv5CgxnQ4LnluM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"FirstName\" : \"Osman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5107/employee/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5107",
+					"path": [
+						"employee",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
+
+```
+
