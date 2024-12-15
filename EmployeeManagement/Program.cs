@@ -3,17 +3,13 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .WriteTo.Console() 
-    .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
-    .WriteTo.Seq("http://localhost:5107")
-    .CreateLogger();
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDependency(builder.Configuration);
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
